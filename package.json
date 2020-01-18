@@ -4,16 +4,22 @@
   "description": "Rate-limiting module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node dist/app.js",
+    "test": "jest --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^24.9.0",
+    "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
-    "ts-jest": "^24.3.0"
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.3.0",
+    "tslint": "^5.20.1"
   },
   "dependencies": {
+    "@types/express": "^4.17.2",
+    "express": "^4.17.1",
     "typescript": "^3.7.5"
   }
 }
