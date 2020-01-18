@@ -1,0 +1,19 @@
+{
+  "name": "rate-limit-strategy",
+  "version": "1.0.0",
+  "description": "Rate-limiting module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0"
+  },
+  "dependencies": {
+    "typescript": "^3.7.5"
+  }
+}
