@@ -17,4 +17,6 @@ dotenv.config({ path });
 export const APPLICATION_PORT = process.env.APPLICATION_PORT;
 export const REDIS_PORT = process.env.REDIS_PORT;
 export const REDIST_HOST = process.env.REDIST_HOST;
+export const REQUEST_LIMIT = process.env.REQUEST_LIMIT;
 export const MOCK_REDIS_PORT = process.env.MOCK_REDIS_PORT;
+export const TIME_LIMIT_IN_MILLISECONDS = process.env.TIME_LIMIT_IN_MILLISECONDS;
