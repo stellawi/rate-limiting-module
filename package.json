@@ -4,7 +4,7 @@
   "description": "Rate-limiting module",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "export NODE_ENV=development && tsc && node dist/app.js",
     "test": "jest --watch"
   },
   "author": "",
