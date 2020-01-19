@@ -1,18 +1,28 @@
 import express from "express";
+import { Api } from "./Api";
+import { RedisClient } from "./RedisClient";
 
-const app = express();
+const App = express();
 const port = 3000;
 
-app.get("/", (_, res) => {
+process.env.NODE_ENV = "development";
+
+const api = new Api();
+const redisClient = new RedisClient(6379, "127.0.0.1");
+redisClient.connect();
+
+App.get("/", async (_, res) => {
+  api.get(redisClient);
   res.send("Hello world");
 });
-app.listen(port, (err) => {
+
+App.listen(port, (err) => {
+  console.log(`server is listening on ${port}`);
   if (err) {
-    return console.error(err);
+    throw err;
   }
-  return console.log(`server is listening on ${port}`);
 });
 
 export {
-  app,
+  App,
 };
