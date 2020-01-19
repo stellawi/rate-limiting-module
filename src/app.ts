@@ -9,7 +9,7 @@ const api = new Api();
 const redisClient = new RedisClient(Number(REDIS_PORT), REDIST_HOST);
 redisClient.connect();
 
-App.get("/", async (_, res) => {
+App.get("/", (_, res) => {
   api.get(redisClient);
   res.send("Hello world");
 });

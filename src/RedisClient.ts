@@ -21,7 +21,7 @@ export class RedisClient {
     this.client.set(`${key}`, `${value}`);
   }
 
-  public getValue = async (key: string, func: any) => {
+  public getValue = (key: string, func: any) => {
     this.client.get(`${key}`, func);
   }
 }
