@@ -21,7 +21,7 @@ App.get("/", (_, res) => {
   } catch (e) {
     if (e instanceof CustomError) {
       res.status(429).send(e.displayErrorMessage());
-      setTimeout(setRequestLimitToFalse, Number(TIMEOUT));
+      setTimeout(setRequestLimitToFalse, Number(TIMEOUT) * 1000);
     }
   }
 });
