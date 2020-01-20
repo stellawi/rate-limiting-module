@@ -21,24 +21,14 @@ export class Api {
     this.getNoOfRequest();
   }
 
-  private getNoOfRequest() {
-    this.rateLimitMechanism();
-  }
-
-  private rateLimitMechanism() {
+  public rateLimitMechanism() {
     this.redisClient
       .getValueFromMultipleKeys("number_of_request", "creation_time", (_: any, result: string[]) => {
         const currentRequestNo: string = result[0];
         const creationTime: string = result[1];
 
         if (creationTime) {
-          const currentTime: string = new Date().getTime().toString();
-          const timeDifference = Number(currentTime) - Number(creationTime);
-
-          const timeDifferenceExceedTimeLimit = timeDifference > Number(TIME_LIMIT_IN_MILLISECONDS);
-          const noOfRequestEqualRequestLimit = Number(currentRequestNo) === Number(REQUEST_LIMIT);
-
-          if (timeDifferenceExceedTimeLimit || noOfRequestEqualRequestLimit) {
+          if (this.isExceedingTimeLimit(creationTime) || this.isEqualToMaxRequestLimit(currentRequestNo)) {
             this.requestLimitExceeded = true;
             return this.exceedRequestLimit();
           }
@@ -46,6 +36,25 @@ export class Api {
         this.requestLimitExceeded = false;
         return this.updateKey("number_of_request", currentRequestNo);
       });
+  }
+
+  private exceedRequestLimit() {
+    this.redisClient.deleteKey("creation_time");
+    this.redisClient.deleteKey("number_of_request");
+  }
+
+  private isEqualToMaxRequestLimit(currentRequestNo: string) {
+    return Number(currentRequestNo) === Number(REQUEST_LIMIT);
+  }
+
+  private isExceedingTimeLimit(creationTime: string) {
+    const currentTime: string = new Date().getTime().toString();
+    const timeDifference = Number(currentTime) - Number(creationTime);
+    return timeDifference > Number(TIME_LIMIT_IN_MILLISECONDS);
+  }
+
+  private getNoOfRequest() {
+    this.rateLimitMechanism();
   }
 
   private updateKey(key: string, value: string) {
@@ -56,10 +65,4 @@ export class Api {
       this.redisClient.setKey("creation_time", new Date().getTime().toString());
     }
   }
-
-  private exceedRequestLimit() {
-    this.redisClient.deleteKey("creation_time");
-    this.redisClient.deleteKey("number_of_request");
-  }
-
 }

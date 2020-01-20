@@ -1,28 +1,23 @@
-import redis from "redis-mock";
+import redis, { RedisClient } from "redis-mock";
 import request from "supertest";
+import { Api } from "../Api";
 import { App } from "../App";
 
 describe("App", () => {
-  let client;
+  let client: RedisClient;
+  let api: Api;
 
-  it("should show hello world", async () => {
+  beforeEach(() => {
     client = redis.createClient({
       port: 9000,
     });
+    api = new Api(client as any);
+  });
+
+  it("should print hello world on the main page", async () => {
     const response = await request(App)
       .get("/").expect(200)
       .expect("Content-Type", "text/html; charset=utf-8");
     expect(response.text).toEqual("Hello world");
-  });
-
-  it("should connect to redis", async () => {
-    await request(App).get("/");
-    client = redis.createClient({
-      port: 9000,
-    });
-    client.set("number_of_request", "4");
-    client.get("number_of_request", async (_, result: string) => {
-      expect(result).toEqual("4");
-    });
   });
 });
