@@ -13,15 +13,15 @@ redisClient.connect();
 
 App.get("/", (_, res) => {
   try {
+    if (api.isExceedingRequestLimit) {
+      throw new CustomError("Rate limit exceeded. Try again in #{n} seconds");
+    }
     api.get();
-    // console.log("response", response);
-    // if (!response) {
-    //   throw new CustomError("Rate limit exceeded. Try again in #{n} seconds");
-    // }
     res.send("Hello world");
   } catch (e) {
     if (e instanceof CustomError) {
       res.status(429).send(e.displayErrorMessage());
+      api.isExceedingRequestLimit = false;
     }
   }
 });
