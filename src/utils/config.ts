@@ -19,4 +19,5 @@ export const REDIS_PORT = process.env.REDIS_PORT;
 export const REDIST_HOST = process.env.REDIST_HOST;
 export const REQUEST_LIMIT = process.env.REQUEST_LIMIT;
 export const MOCK_REDIS_PORT = process.env.MOCK_REDIS_PORT;
+export const TIMEOUT = process.env.TIMEOUT;
 export const TIME_LIMIT_IN_MILLISECONDS = process.env.TIME_LIMIT_IN_MILLISECONDS;
