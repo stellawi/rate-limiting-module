@@ -1,7 +1,5 @@
-import CustomError from "./CustomError";
 import { RedisClient } from "./RedisClient";
 import { REQUEST_LIMIT, TIME_LIMIT_IN_MILLISECONDS } from "./utils/config";
-
 export class Api {
   private redisClient: RedisClient;
 
@@ -27,10 +25,10 @@ export class Api {
           const noOfRequestEqualRequestLimit = Number(currentRequestNo) === Number(REQUEST_LIMIT);
 
           if (timeDifferenceExceedTimeLimit || noOfRequestEqualRequestLimit) {
-            this.exceedTimeLimit();
+            return this.exceedTimeLimit();
           }
         }
-        this.updateKey("number_of_request", currentRequestNo);
+        return this.updateKey("number_of_request", currentRequestNo);
       });
   }
 

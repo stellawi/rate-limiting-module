@@ -13,8 +13,8 @@ redisClient.connect();
 
 App.get("/", (_, res) => {
   try {
-    const response = api.get();
-    console.log(response);
+    api.get();
+    // console.log("response", response);
     // if (!response) {
     //   throw new CustomError("Rate limit exceeded. Try again in #{n} seconds");
     // }
