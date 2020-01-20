@@ -61,7 +61,7 @@ export class Api {
     if (value) {
       this.redisClient.incrementByOne("number_of_request");
     } else {
-      this.redisClient.setKey(key, "99");
+      this.redisClient.setKey(key, "1");
       this.redisClient.setKey("creation_time", new Date().getTime().toString());
     }
   }
